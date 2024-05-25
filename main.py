@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
 import duckdb
 import geopandas as gpd
@@ -6,6 +7,15 @@ import json
 from shapely.geometry import shape
 
 app = FastAPI()
+
+# Adicionar middleware CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Permite todas as origens
+    allow_credentials=True,
+    allow_methods=["*"],  # Permite todos os métodos
+    allow_headers=["*"],  # Permite todos os cabeçalhos
+)
 
 # Conectar ao DuckDB e instalar a extensão spatial
 con = duckdb.connect()
